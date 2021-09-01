@@ -6,7 +6,21 @@
 ## 深度可分离卷积
 * 深度可分离卷积将一般的卷积过程分为了`depthwise convolution`（逐深度卷积）和`pointwise convolution`（逐点卷积），
   在损失一点精度的情况下，计算量大幅下降，速度更快，模型更小
-
+```text
+c1           : 输入通道数
+c2           : 输出通道数
+卷积核大小    : k*k
+普通卷积的参数量 : c1*k*k*c2
+深度可分离卷积的参数量 : c1*k*k + c1*1*1*c2
+```
+![](../docs/images/base_tutorial/depthwise_separable_convolution.png)
+  
+  
+## 分组卷积
+![](../docs/images/base_tutorial/groupconv.png)
+```text
+分组卷积的分组数如果和输入的通道数相同，则此时的分组卷积即为深度可分离卷积
+```
 ## 参考链接
 * 1 [Focus结构](https://zhuanlan.zhihu.com/p/172121380)
 * 2 [Focus结构](https://mp.weixin.qq.com/s/yO13BjSNG1cEDAxqR-SkHw)
