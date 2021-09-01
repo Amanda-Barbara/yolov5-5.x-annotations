@@ -1,0 +1,13 @@
+# common.py代码解析
+## Focus结构
+* 对输入图像的每一通道做切片操作，变成4个原输入大小一半的4个切片，3个通道切片后加在一起即是12个切片
+* 该模块的设计主要是减少原始信息的丢失，减少计算量加快模型推理速度
+
+## 深度可分离卷积
+* 深度可分离卷积将一般的卷积过程分为了`depthwise convolution`（逐深度卷积）和`pointwise convolution`（逐点卷积），
+  在损失一点精度的情况下，计算量大幅下降，速度更快，模型更小
+
+## 参考链接
+* 1 [Focus结构](https://zhuanlan.zhihu.com/p/172121380)
+* 2 [Focus结构](https://mp.weixin.qq.com/s/yO13BjSNG1cEDAxqR-SkHw)
+* 3 [深度可分离卷积](https://www.cnblogs.com/sddai/p/14549475.html)
