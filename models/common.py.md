@@ -25,3 +25,6 @@ c2           : 输出通道数
 * 1 [Focus结构](https://zhuanlan.zhihu.com/p/172121380)
 * 2 [Focus结构](https://mp.weixin.qq.com/s/yO13BjSNG1cEDAxqR-SkHw)
 * 3 [深度可分离卷积](https://www.cnblogs.com/sddai/p/14549475.html)
+* 4 [分组卷积](https://blog.csdn.net/breeze_blows/article/details/98068025)
+* 5 [common.py代码解析](https://blog.csdn.net/qq_38253797/article/details/119684388)
+

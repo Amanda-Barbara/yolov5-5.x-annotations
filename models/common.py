@@ -200,6 +200,7 @@ def DWConv(c1, c2, k=1, s=1, act=True):
 
 # 改变feature map的维度  用的不多
 class Contract(nn.Module):
+
     """用在yolo.py的parse_model模块
     改变输入特征的shape 将w和h维度(缩小)的数据收缩到channel维度上(放大)
     Contract width-height into channels, i.e. x(1,64,80,80) to x(1,256,40,40)
