@@ -3,7 +3,11 @@
 ## letterbox
 * 输入图像自适应缩放，目的是为了最大程度减少输入图像的黑边进而提升模型的推理速度
 
-![](../docs/images/data_augmentation/mixup_cutout.png)
+## mixup and cutout 数据增强
+![mixup_cutout](../docs/images/data_augmentation/mixup_cutout.png)
+
+## mosic 数据增强
+![mosic](../docs/images/data_augmentation/mosic.png)
 
 ## 参考链接
 * 1 [输入图像自适应缩放](https://zhuanlan.zhihu.com/p/172121380)
