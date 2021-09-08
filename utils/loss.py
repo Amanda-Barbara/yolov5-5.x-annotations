@@ -165,7 +165,7 @@ class ComputeLoss:
         for k in 'na', 'nc', 'nl', 'anchors':
             # setattr: 给对象self的属性k赋值为getattr(det, k)
             # getattr: 返回det对象的k属性
-            # 所以这句话的意思: 讲det的k属性赋值给self.k属性 其中k in 'na', 'nc', 'nl', 'anchors'
+            # 所以这句话的意思: 将det的k属性赋值给self.k属性 其中k in 'na', 'nc', 'nl', 'anchors'
             setattr(self, k, getattr(det, k))
 
     def __call__(self, p, targets):  # predictions, targets, model

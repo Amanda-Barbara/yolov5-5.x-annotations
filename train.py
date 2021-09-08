@@ -92,6 +92,7 @@ def train(hyp, opt, device):
 
     # 保存opt
     with open(save_dir / 'opt.yaml', 'w') as f:
+        # vars(opt)把ArgumentParser类型的对象opt转换成字典类型
         yaml.safe_dump(vars(opt), f, sort_keys=False)
 
     # Configure
@@ -714,6 +715,7 @@ def main(opt):
     set_logging(RANK)
     if RANK in [-1, 0]:
         # 输出所有训练opt参数  train: ...
+        # vars(opt)把ArgumentParser类型的对象opt转换成字典类型
         print(colorstr('train: ') + ', '.join(f'{k}={v}' for k, v in vars(opt).items()))
         # 检查代码版本是否是最新的  github: ...
         check_git_status()
