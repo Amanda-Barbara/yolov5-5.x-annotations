@@ -284,6 +284,11 @@ class ComputeLoss:
                         gj: 经过筛选后确定某个target在某个网格中进行预测(计算损失)  gj表示这个网格的左上角y坐标
                         gi: 表示这个网格的左上角x坐标
                 anch: 表示这个target所使用anchor的尺度（相对于这个feature map）  注意可能一个target会使用大小不同anchor进行计算
+        具体处理流程：
+        (1) 对于任何一层计算当前bbox和当前层anchor的匹配程度，不采用iou，而是shape比例，
+            如果anchor和bbox的宽高比差距大于4，则认为不匹配，此时忽略相应的bbox，即当作背景；
+        (2) 然后对bbox计算落在的网格所有的anchors都计算loss，(并不是直接和GT框比较计算loss)
+        注意此时落在网格不再是一个，而是附近的多个，这样就增加了正样本的数量
         """
         na, nt = self.na, targets.shape[0]  # number of anchors 3, targets 63
         tcls, tbox, indices, anch = [], [], [], []   # 初始化tcls tbox indices anch

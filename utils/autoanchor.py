@@ -148,6 +148,7 @@ def kmean_anchors(path='./data/coco128.yaml', n=9, img_size=640, thr=4.0, gen=10
         x = torch.min(r, 1. / r).min(2)[0]  # ratio metric
         # x = wh_iou(wh, torch.tensor(k))  # iou metric
         # x.max(1)[0]: [N] 返回每个gt和所有anchor(9个)中宽比/高比最大的值
+        # 如果anchor和bbox的匹配度最高的宽高比的比值大于4，
         return x, x.max(1)[0]  # x, best_x
 
     def anchor_fitness(k):   # mutation fitness
