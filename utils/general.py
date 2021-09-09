@@ -657,6 +657,7 @@ def xyn2xy(x, w=640, h=640, padw=0, padh=0):
     y[:, 1] = h * x[:, 1] + padh  # top left y
     return y
 
+# https://nenadmarkus.com/p/fusing-batchnorm-and-conv/
 def non_max_suppression(prediction, conf_thres=0.25, iou_thres=0.45, classes=None,
                         agnostic=False, multi_label=True, labels=(), max_det=300, merge=False):
     """
