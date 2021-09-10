@@ -676,7 +676,7 @@ def parse_opt(known=False):
     parser.add_argument('--resume', nargs='?', const=True, default=False, help='resume most recent training')
     parser.add_argument('--nosave', action='store_true', help='True only save final checkpoint')
     parser.add_argument('--notest', action='store_true', help='True only test final epoch')
-    parser.add_argument('--workers', type=int, default=0, help='maximum number of dataloader workers')
+    parser.add_argument('--workers', type=int, default=2, help='maximum number of dataloader workers')
     parser.add_argument('--device', default='', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
     parser.add_argument('--single-cls', action='store_true', help='train multi-class data as single-class')
     # --------------------------------------------------- 数据增强参数 ---------------------------------------------
@@ -718,9 +718,9 @@ def main(opt):
         # vars(opt)把ArgumentParser类型的对象opt转换成字典类型
         print(colorstr('train: ') + ', '.join(f'{k}={v}' for k, v in vars(opt).items()))
         # 检查代码版本是否是最新的  github: ...
-        check_git_status()
+        # check_git_status()
         # 检查requirements.txt所需包是否都满足 requirements: ...
-        check_requirements(exclude=['thop'])
+        # check_requirements(exclude=['thop'])
 
     # wandb logging初始化
     wandb_run = check_wandb_resume(opt)
