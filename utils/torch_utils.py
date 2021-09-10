@@ -327,6 +327,7 @@ def fuse_conv_and_bn(conv, bn):
     融合卷积层和BN层(测试推理使用)   Fuse convolution and batchnorm layers
     方法: 卷积层还是正常定义, 但是卷积层的参数w,b要改变   通过只改变卷积参数, 达到CONV+BN的效果
           w = w_bn * w_conv   b = w_bn * b_conv + b_bn   (可以证明)
+    https://flyfish.blog.csdn.net/article/details/120088043
     https://tehnokv.com/posts/fusing-batchnorm-and-conv/
     https://github.com/ultralytics/yolov3/issues/807
     https://zhuanlan.zhihu.com/p/94138640
