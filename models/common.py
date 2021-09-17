@@ -99,7 +99,7 @@ class Bottleneck(nn.Module):
         c_ = int(c2 * e)                    # hidden channels
         self.cv1 = Conv(c1, c_, 1, 1)       # 1x1
         self.cv2 = Conv(c_, c2, 3, 1, g=g)  # 3x3
-        self.add = shortcut and c1 == c2    # shortcut=True and c1 == c2 才能做shortcut
+        self.add = shortcut and c1 == c2    # shortcut=True and c1 == c2 才能做shortcut直连
 
     def forward(self, x):
         return x + self.cv2(self.cv1(x)) if self.add else self.cv2(self.cv1(x))
