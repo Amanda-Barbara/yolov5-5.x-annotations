@@ -452,7 +452,7 @@ class AutoShape(nn.Module):
     将model封装成包含前处理、推理、后处理的模块(预处理 + 推理 + nms)  也是一个扩展模型功能的模块
     autoshape模块在train中不会被调用，当模型训练结束后，会通过这个模块对图片进行重塑，来方便模型的预测
     自动调整shape，我们输入的图像可能不一样，可能来自cv2/np/PIL/torch 对输入进行预处理 调整其shape，
-    调整shape在datasets.py文件中,这个实在预测阶段使用的,model.eval(),模型就已经无法训练进入预测模式了
+    调整shape在datasets.py文件中,这个是在预测阶段使用的,model.eval(),模型就已经无法训练进入预测模式了
     input-robust model wrapper for passing cv2/np/PIL/torch inputs. Includes preprocessing, inference and NMS
     """
     conf = 0.25     # 置信度阈值 NMS confidence threshold
