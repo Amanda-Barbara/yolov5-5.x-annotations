@@ -109,7 +109,8 @@ def parse_model(d, ch):  # model_dict, input_channels(3)
             # Upsample
             c2 = ch[f]  # args不变
         # -----------------------------------------------------------------------------------
-
+        # 通过ModuleList添加PyTorch自定义的组件来构建一个新的网络模块，
+        # 通过Sequential添加ModuleList构建的自定义模块来组成更大的网络模块
         # m_: 得到当前层module  如果n>1就创建多个m(当前层结构), 如果n=1就创建一个m
         m_ = nn.Sequential(*[m(*args) for _ in range(n)]) if n > 1 else m(*args)
 

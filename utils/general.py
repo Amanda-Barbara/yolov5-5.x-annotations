@@ -292,7 +292,7 @@ def make_divisible(x, divisor):
     取大于等于x且是divisor的最小倍数
     Returns x evenly divisible by divisor
     """
-    # math.ceil 向上取整
+    # math.ceil()向上取整， math.floor()向下取整， math.round()四舍五入
     return math.ceil(x / divisor) * divisor
 
 def check_img_size(img_size, s=32):
