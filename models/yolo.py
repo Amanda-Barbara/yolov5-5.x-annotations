@@ -188,12 +188,11 @@ class Detect(nn.Module):
             x[0]:torch.Size([1, 128, 32, 32]) -> torch.Size([1, 255, 32, 32]) -> torch.Size([1, 3, 32, 32, 85])
             x[1]:torch.Size([1, 256, 16, 16])->torch.Size([1, 255, 16, 16])->torch.Size([1, 3, 16, 16, 85])
             x[2]:torch.Size([1, 512, 8, 8])->torch.Size([1, 255, 8, 8])->torch.Size([1, 3, 8, 8, 85])
+            特征图网格映射->结合训练的目标类别信息以及anchor信息进行网格映射
             """
-            x[i] = self.m[i](x[i])  # conv  xi[bs, 128/256/512, 80, 80] to [bs, 75, 80, 80]
+            x[i] = self.m[i](x[i])
             bs, _, ny, nx = x[i].shape
-            # [bs, 75, 80, 80] to [1, 3, 25, 80, 80] to [1, 3, 80, 80, 25]
             x[i] = x[i].view(bs, self.na, self.no, ny, nx).permute(0, 1, 3, 4, 2).contiguous()
-
             # inference
             if not self.training:
                 # 构造网格
