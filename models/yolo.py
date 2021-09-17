@@ -57,7 +57,7 @@ def parse_model(d, ch):  # model_dict, input_channels(3)
     layers, save, c2 = [], [], ch[-1]
     # from(当前层输入来自哪些层), number(当前层次数 初定), module(当前层类别), args(当前层类参数 初定)
     for i, (f, n, m, args) in enumerate(d['backbone'] + d['head']):  # 遍历backbone和head的每一层
-        # eval(string) 得到当前层的真实类名 例如: m= Focus -> <class 'models.common.Focus'>
+        # eval(string) 获取当前层的真实类名 例如: m= Focus -> <class 'models.common.Focus'>
         m = eval(m) if isinstance(m, str) else m
 
         # 没什么用
@@ -67,7 +67,7 @@ def parse_model(d, ch):  # model_dict, input_channels(3)
             except:
                 pass
         # ------------------- 更新当前层的args（参数）,计算c2（当前层的输出channel） -------------------
-        # depth gain 控制深度  如v5s: n*0.33   n: 当前模块的次数(间接控制深度)
+        # depth gain 控制深度  如v5s: n*0.33   number: 当前模块的次数(间接控制深度)，深度number如果为1的话，则不做缩放处理
         n = max(round(n * gd), 1) if n > 1 else n
         if m in [Conv, GhostConv, Bottleneck, GhostBottleneck, SPP, DWConv, MixConv2d,
                  Focus, CrossConv, BottleneckCSP, C3, C3TR, CBAM]:
@@ -75,7 +75,7 @@ def parse_model(d, ch):  # model_dict, input_channels(3)
             c1, c2 = ch[f], args[0]
             # if not output  no=75  只有最后一层c2=no  最后一层不用控制宽度，输出channel必须是no
             if c2 != no:
-                # width gain 控制宽度  如v5s: c2*0.5  c2: 当前层的最终输出的channel数(间接控制宽度)
+                # width gain 控制宽度  如v5s: c2*0.5  c2: 当前层的最终输出的channel数(间接控制宽度)，通过调整c2来控制网络的宽度
                 c2 = make_divisible(c2 * gw, 8)
 
             # 在初始arg的基础上更新 加入当前层的输入channel并更新当前层
@@ -190,9 +190,12 @@ class Detect(nn.Module):
             x[2]:torch.Size([1, 512, 8, 8])->torch.Size([1, 255, 8, 8])->torch.Size([1, 3, 8, 8, 85])
             特征图网格映射->结合训练的目标类别信息以及anchor信息进行网格映射
             """
+            # print(x[i].shape)
             x[i] = self.m[i](x[i])
+            # print(x[i].shape)
             bs, _, ny, nx = x[i].shape
             x[i] = x[i].view(bs, self.na, self.no, ny, nx).permute(0, 1, 3, 4, 2).contiguous()
+            # print(x[i].shape)
             # inference
             if not self.training:
                 # 构造网格
