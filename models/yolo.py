@@ -131,7 +131,7 @@ def parse_model(d, ch):  # model_dict, input_channels(3)
 
         # 把当前层的输出channel数加入ch
         ch.append(c2)
-
+    # 使用nn.Sequential再对各个模块进行整合到一起
     return nn.Sequential(*layers), sorted(save)
 
 class Detect(nn.Module):

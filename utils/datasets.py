@@ -25,6 +25,7 @@ import yaml                            # yaml文件操作模块
 from PIL import Image, ExifTags        # 图片、相机操作模块
 from torch.utils.data import Dataset   # 自定义数据集模块
 from tqdm import tqdm                  # 进度条模块
+from torch.utils.tensorboard import SummaryWriter  # tensorboard模块
 
 from utils.general import check_requirements, check_file, check_dataset, xywh2xyxy, xywhn2xyxy, xyxy2xywhn, \
     xyn2xy, segment2box, segments2boxes, resample_segments, clean_str
@@ -37,6 +38,7 @@ vid_formats = ['mov', 'avi', 'mp4', 'mpg', 'mpeg', 'm4v', 'wmv', 'mkv']  # accep
 num_threads = min(8, os.cpu_count())  # 定义多线程个数
 logger = logging.getLogger(__name__)  # 初始化日志
 
+# writer = SummaryWriter("docs/log/img_mosaic_generate")
 
 # ---------------------------------------- 1、相机设置 ----------------------------------------
 # 相机设置
@@ -756,28 +758,29 @@ def load_mosaic(self, index):
     # segments4: 用于存放拼接图像（4张图拼成一张）的label信息(包含segments多边形)
     labels4, segments4 = [], []
     s = self.img_size  # 一般的图片大小
-    # 随机初始化拼接图像的中心点坐标  [0, s*2]之间随机取2个数作为拼接图像的中心坐标
+    # 随机初始化拼接图像的中心点坐标  [320, s*2-320]之间随机取2个数作为拼接图像的中心坐标
     yc, xc = [int(random.uniform(-x, 2 * s + x)) for x in self.mosaic_border]  # mosaic center x, y
     # 从dataset中随机寻找额外的三张图像进行拼接 [14, 26, 2, 16] 再随机选三张图片的index
     indices = [index] + random.choices(self.indices, k=3)  # 3 additional image indices
     # 遍历四张图像进行拼接 4张不同大小的图像 => 1张[1472, 1472, 3]的图像
     for i, index in enumerate(indices):
-        # load image   每次拿一张图片 并将这张图片resize到self.size(h,w)
+        # load image   每次拿一张图片 并将这张图片resize到self.img_size(h,w)，(h, w)=(481, 640)
         img, _, (h, w) = load_image(self, index)
 
         # place img in img4
-        if i == 0:  # top left  原图[375, 500, 3] load_image->[552, 736, 3]   hwc
-            # 创建马赛克图像 [1472, 1472, 3]=[h, w, c]
+        if i == 0:  # top left
+            # 创建马赛克图像 [1280, 1280, 3]=[h, w, c]
             img4 = np.full((s * 2, s * 2, img.shape[2]), 114, dtype=np.uint8)  # base image with 4 tiles
-            # 计算马赛克图像中的坐标信息(将图像填充到马赛克图像中)   w=736  h = 552  马赛克图像：(x1a,y1a)左上角 (x2a,y2a)右下角
-            x1a, y1a, x2a, y2a = max(xc - w, 0), max(yc - h, 0), xc, yc  # xmin, ymin, xmax, ymax (large image)
-            # 计算截取的图像区域信息(以xc,yc为第一张图像的右下角坐标填充到马赛克图像中，丢弃越界的区域)  图像：(x1b,y1b)左上角 (x2b,y2b)右下角
-            x1b, y1b, x2b, y2b = w - (x2a - x1a), h - (y2a - y1a), w, h  # xmin, ymin, xmax, ymax (small image)
+            # 计算马赛克图像中的坐标信息(将图像填充到马赛克图像中)   w=481  h = 640  计算马赛克图像第一个拼接图像在大图的坐标信息：(x1a,y1a)左上角 (x2a,y2a)右下角
+            x1a, y1a, x2a, y2a = max(xc - w, 0), max(yc - h, 0), xc, yc  # x1a, y1a, x2a, y2a = 0, 0, 493, 480
+            # 从img中的右下角往左上角方向找出[(x1a, y1a),(x2a, y2a)]一样大小的坐标信息，计算出来的坐标信息[(x1b, y1b),(x2b, y2b)]是img上的，
+            # 这样马赛克图像的第一个拼接图像的坐标信息[(x1a, y1a),(x2a, y2a)]和[(x1b, y1b),(x2b, y2b)]一一对应，并且面积相等
+            x1b, y1b, x2b, y2b = w - (x2a - x1a), h - (y2a - y1a), w, h  # x1b, y1b, x2b, y2b = 147, 1, 640, 481
         elif i == 1:  # top right
             # 计算马赛克图像中的坐标信息(将图像填充到马赛克图像中)
-            x1a, y1a, x2a, y2a = xc, max(yc - h, 0), min(xc + w, s * 2), yc
+            x1a, y1a, x2a, y2a = xc, max(yc - h, 0), min(xc + w, s * 2), yc # x1a, y1a, x2a, y2a = 493, 0, 939, 480
             # 计算截取的图像区域信息(以xc,yc为第二张图像的左下角坐标填充到马赛克图像中，丢弃越界的区域)
-            x1b, y1b, x2b, y2b = 0, h - (y2a - y1a), min(w, x2a - x1a), h
+            x1b, y1b, x2b, y2b = 0, h - (y2a - y1a), min(w, x2a - x1a), h # x1b, y1b, x2b, y2b = 0, 160, 446, 640
         elif i == 2:  # bottom left
             # 计算马赛克图像中的坐标信息(将图像填充到马赛克图像中)
             x1a, y1a, x2a, y2a = max(xc - w, 0), yc, xc, min(s * 2, yc + h)
