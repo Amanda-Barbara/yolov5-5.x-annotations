@@ -823,10 +823,10 @@ def load_mosaic(self, index):
         np.clip(x, 0, 2 * s, out=x)  # clip when using random_perspective()
     # writer.add_image(tag="data_mosaic", img_tensor=cv2.cvtColor(img4, cv2.COLOR_BGR2RGB), global_step=0, dataformats='HWC')
     # 测试代码  测试前面的mosaic效果
-    # cv2.imshow("mosaic", img4)
-    # cv2.waitKey(0)
-    # cv2.destroyAllWindows()
-    # print(img4.shape)   # (1280, 1280, 3)
+    cv2.imshow("mosaic", img4)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+    print(img4.shape)   # (1280, 1280, 3)
 
     # 随机偏移标签中心，生成新的标签与原标签结合 replicate
     # img4, labels4 = replicate(img4, labels4)
