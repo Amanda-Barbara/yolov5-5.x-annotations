@@ -81,7 +81,7 @@ class Focus(nn.Module):
 
     def forward(self, x):
 
-        # x(b,c,w,h) -> y(b,4c,w/2,h/2)  有点像做了个下采样
+        # x(b,c,w,h) -> y(b,4c,w/2,h/2)  有点像做了个下采样，按行进行拼接，拼接后的结果的行数与拼接前的数据的行数一致，
         return self.conv(torch.cat([x[..., ::2, ::2], x[..., 1::2, ::2], x[..., ::2, 1::2], x[..., 1::2, 1::2]], 1))
         # return self.conv(self.contract(x))
 

@@ -754,6 +754,8 @@ def load_mosaic(self, index):
     :return: img4: mosaic和随机透视变换后的一张图片  numpy(640, 640, 3)
              labels4: img4对应的target  [M, cls+x1y1x2y2]
     """
+    figure = plt.figure(figsize=(10, 10))
+
     # labels4: 用于存放拼接图像（4张图拼成一张）的label信息(不包含segments多边形)
     # segments4: 用于存放拼接图像（4张图拼成一张）的label信息(包含segments多边形)
     labels4, segments4 = [], []
@@ -794,6 +796,11 @@ def load_mosaic(self, index):
 
         # 将截取的图像区域填充到马赛克图像的相应位置   img4[h, w, c]
         # 将图像img的【(x1b,y1b)左上角 (x2b,y2b)右下角】区域截取出来填充到马赛克图像的【(x1a,y1a)左上角 (x2a,y2a)右下角】区域
+        plt.subplot(2, 2, i + 1, title=str(i))
+        plt.xticks([])
+        plt.yticks([])
+        plt.grid(False)
+        plt.imshow(img[y1b:y2b, x1b:x2b])
         img4[y1a:y2a, x1a:x2a] = img[y1b:y2b, x1b:x2b]  # img4[ymin:ymax, xmin:xmax]
         # 计算pad(当前图像边界与马赛克边界的距离，越界的情况padw/padh为负值)  用于后面的label映射
         padw = x1a - x1b   # 当前图像与马赛克图像在w维度上相差多少
@@ -808,13 +815,13 @@ def load_mosaic(self, index):
             segments = [xyn2xy(x, w, h, padw, padh) for x in segments]
         labels4.append(labels)      # 更新labels4
         segments4.extend(segments)  # 更新segments4
-
+    # writer.add_figure('figure', figure=figure, global_step=0)
     # Concat/clip labels4 把labels4（[(2, 5), (1, 5), (3, 5), (1, 5)] => (7, 5)）压缩到一起
     labels4 = np.concatenate(labels4, 0)
     # 防止越界  label[:, 1:]中的所有元素的值（位置信息）必须在[0, 2*s]之间,小于0就令其等于0,大于2*s就等于2*s   out: 返回
     for x in (labels4[:, 1:], *segments4):
         np.clip(x, 0, 2 * s, out=x)  # clip when using random_perspective()
-
+    # writer.add_image(tag="data_mosaic", img_tensor=cv2.cvtColor(img4, cv2.COLOR_BGR2RGB), global_step=0, dataformats='HWC')
     # 测试代码  测试前面的mosaic效果
     # cv2.imshow("mosaic", img4)
     # cv2.waitKey(0)

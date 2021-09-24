@@ -46,7 +46,7 @@ class Colors:
 
     @staticmethod
     def hex2rgb(h):  # rgb order (PIL)
-        # hex -> rgb
+        # hex -> 10进制格式的rgb
         return tuple(int(h[1 + i:1 + i + 2], 16) for i in (0, 2, 4))
 colors = Colors()  # 初始化Colors对象 下面调用colors的时候会调用__call__函数
 
