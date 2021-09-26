@@ -9,7 +9,16 @@
 第三个被拼接的图像的右上角与拼接后的图像的中心点坐标`(xc,yc)`重合，
 第四个被拼接的图像的左上角与拼接后的图像的中心点坐标`(xc,yc)`重合，
   
-  
+## random_perspective坐标矩阵变换
+* 透视变换基本原理解释
+
+![](../docs/images/data_augmentation/perspective_transformation.png)
+* 仿射变换(旋转、平移、缩放)基本原理解释  
+仿射变换是透视变换的一种，
+![](../docs/images/data_augmentation/affine_RTS.png)
+
+
+
 
 ## 参考链接
-* 1 []()
+* 1 [random_perspective仿射变换](https://www.algorithm-archive.org/contents/affine_transformations/affine_transformations.html)

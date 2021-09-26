@@ -969,8 +969,8 @@ def random_perspective(img, targets=(), segments=(), degrees=10, translate=.1,
 
     # Perspective  设置透视变换矩阵
     P = np.eye(3)
-    P[2, 0] = random.uniform(-perspective, perspective)  # x perspective (about y)
-    P[2, 1] = random.uniform(-perspective, perspective)  # y perspective (about x)
+    P[2, 0] = random.uniform(-perspective, perspective)  # x perspective (about y) 返回浮点类型的随机数
+    P[2, 1] = random.uniform(-perspective, perspective)  # y perspective (about x) 返回浮点类型的随机数
 
     # Rotation and Scale  设置旋转和缩放矩阵
     R = np.eye(3)    # 初始化R = [[1,0,0], [0,1,0], [0,0,1]]    (3, 3)
