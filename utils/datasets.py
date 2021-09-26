@@ -156,7 +156,7 @@ class _RepeatSampler(object):
     def __iter__(self):
         while True:
             yield from iter(self.sampler)
-
+# 定义LoadImagesAndLabels类，继承Dataset，需要重写抽象方法__len__以及__getitem__
 class LoadImagesAndLabels(Dataset):
     # for training/testing
     def __init__(self, path, img_size=640, batch_size=16, augment=False, hyp=None, rect=False,
