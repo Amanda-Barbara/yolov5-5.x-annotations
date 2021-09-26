@@ -1038,7 +1038,7 @@ def random_perspective(img, targets=(), segments=(), degrees=10, translate=.1,
                 xy[:, :2] = segment  # [500, 2]
                 # 对该标签多边形的所有顶点坐标进行透视/仿射变换
                 xy = xy @ M.T  # transform
-                xy = xy[:, :2] / xy[:, 2:3] if perspective else xy[:, :2]  # perspective rescale or affine
+                xy = xy[:, :2] / xy[:, 2:3] if perspective else xy[:, :2]  # perspective rescale or affine 把进过M.T转换后的三维空间图像再次映射到二维平面上
 
                 # 根据segment的坐标，取xy坐标的最大最小值，得到边框的坐标  clip
                 new[i] = segment2box(xy, width, height)  # xy [500, 2]
