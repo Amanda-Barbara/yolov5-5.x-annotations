@@ -1001,7 +1001,7 @@ def random_perspective(img, targets=(), segments=(), degrees=10, translate=.1,
     # 将仿射变换矩阵M作用在图片上
     if (border[0] != 0) or (border[1] != 0) or (M != np.eye(3)).any():  # image changed
         if perspective:
-            # 透视变换函数  实现旋转平移缩放变换后的平行线不再平行
+            # 透视变换函数，可保持直线不变形，但是平行线可能不再平行，
             # 参数和下面warpAffine类似
             img = cv2.warpPerspective(img, M, dsize=(width, height), borderValue=(114, 114, 114))
         else:
@@ -1085,7 +1085,7 @@ def box_candidates(box1, box2, wh_thr=2, ar_thr=20, area_thr=0.1, eps=1e-16):
     w1, h1 = box1[2] - box1[0], box1[3] - box1[1]  # 求出所有box1矩形框的宽和高  [n] [n]
     w2, h2 = box2[2] - box2[0], box2[3] - box2[1]  # 求出所有box2矩形框的宽和高  [n] [n]
     ar = np.maximum(w2 / (h2 + eps), h2 / (w2 + eps))  # 求出所有box2矩形框的宽高比和高宽比的较大者  [n, 1]
-    # 筛选条件: 增强后w、h要大于2   增强后图像与增强前图像面积比值大于area_thr   宽高比大于ar_thr
+    # 筛选条件: 增强后w、h要大于2，   增强后图像与增强前图像面积比值大于area_thr=0.1，   宽高比小于ar_thr=20
     return (w2 > wh_thr) & (h2 > wh_thr) & (w2 * h2 / (w1 * h1 + eps) > area_thr) & (ar < ar_thr)  # candidates
 
 def replicate(img, labels):
