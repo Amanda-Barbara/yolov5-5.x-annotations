@@ -823,10 +823,10 @@ def load_mosaic(self, index):
         np.clip(x, 0, 2 * s, out=x)  # clip when using random_perspective()
     # writer.add_image(tag="data_mosaic", img_tensor=cv2.cvtColor(img4, cv2.COLOR_BGR2RGB), global_step=0, dataformats='HWC')
     # 测试代码  测试前面的mosaic效果
-    cv2.imshow("mosaic", img4)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-    print(img4.shape)   # (1280, 1280, 3)
+    # cv2.imshow("mosaic", img4)
+    # cv2.waitKey(0)
+    # cv2.destroyAllWindows()
+    # print(img4.shape)   # (1280, 1280, 3)
 
     # 随机偏移标签中心，生成新的标签与原标签结合 replicate
     # img4, labels4 = replicate(img4, labels4)
@@ -1047,7 +1047,7 @@ def random_perspective(img, targets=(), segments=(), degrees=10, translate=.1,
             # 直接对box透视/仿射变换
             # 由于有旋转，透视变换等操作，所以需要对四个角点都进行变换
             xy = np.ones((n * 4, 3))
-            xy[:, :2] = targets[:, [1, 2, 3, 4, 1, 4, 3, 2]].reshape(n * 4, 2)  # x1y1, x2y2, x1y2, x2y1
+            xy[:, :2] = targets[:, [1, 2, 3, 4, 1, 4, 3, 2]].reshape(n * 4, 2)  # 目标框的四个顶点坐标: x1y1, x2y2, x1y2, x2y1
             xy = xy @ M.T  # transform 每个角点的坐标
             xy = (xy[:, :2] / xy[:, 2:3] if perspective else xy[:, :2]).reshape(n, 8)  # perspective rescale or affine
 
