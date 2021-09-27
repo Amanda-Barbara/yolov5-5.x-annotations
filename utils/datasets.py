@@ -522,7 +522,8 @@ class LoadImagesAndLabels(Dataset):
         labels_out = torch.zeros((nL, 6))
         if nL:
             labels_out[:, 1:] = torch.from_numpy(labels)  # numpy to tensor
-
+        # numpy.ndarray 高维矩阵的表示：H X W X C
+        # torch.Tensor 高维矩阵的表示：(nSample) X C X H X W
         # Convert BGR->RGB  HWC->CHW
         img = img[:, :, ::-1].transpose(2, 0, 1)  # BGR to RGB, to 3 x img_height x img_width
         img = np.ascontiguousarray(img)  # img变成内存连续的数据  加快运算
@@ -754,7 +755,7 @@ def load_mosaic(self, index):
     :return: img4: mosaic和随机透视变换后的一张图片  numpy(640, 640, 3)
              labels4: img4对应的target  [M, cls+x1y1x2y2]
     """
-    figure = plt.figure(figsize=(10, 10))
+    # figure = plt.figure(figsize=(10, 10))
 
     # labels4: 用于存放拼接图像（4张图拼成一张）的label信息(不包含segments多边形)
     # segments4: 用于存放拼接图像（4张图拼成一张）的label信息(包含segments多边形)
@@ -796,11 +797,11 @@ def load_mosaic(self, index):
 
         # 将截取的图像区域填充到马赛克图像的相应位置   img4[h, w, c]
         # 将图像img的【(x1b,y1b)左上角 (x2b,y2b)右下角】区域截取出来填充到马赛克图像的【(x1a,y1a)左上角 (x2a,y2a)右下角】区域
-        plt.subplot(2, 2, i + 1, title=str(i))
-        plt.xticks([])
-        plt.yticks([])
-        plt.grid(False)
-        plt.imshow(img[y1b:y2b, x1b:x2b])
+        # plt.subplot(2, 2, i + 1, title=str(i))
+        # plt.xticks([])
+        # plt.yticks([])
+        # plt.grid(False)
+        # plt.imshow(img[y1b:y2b, x1b:x2b])
         img4[y1a:y2a, x1a:x2a] = img[y1b:y2b, x1b:x2b]  # img4[ymin:ymax, xmin:xmax]
         # 计算pad(当前图像边界与马赛克边界的距离，越界的情况padw/padh为负值)  用于后面的label映射
         padw = x1a - x1b   # 当前图像与马赛克图像在w维度上相差多少
