@@ -177,7 +177,7 @@ class LoadImagesAndLabels(Dataset):
         self.rect=True时self.batch_shapes记载每个batch的shape(同一个batch的图片shape相同)
         """
         # 1、赋值一些基础的self变量 用于后面在__getitem__中调用
-        self.img_size = img_size  # 经过数据增强后的数据图片的大小
+        self.img_size = img_size  # 经过数据增强后的网络训练输入数据图片的大小
         self.augment = augment    # 是否启动数据增强 一般训练时打开 验证时关闭
         self.hyp = hyp            # 超参列表
         # 图片按权重采样  True就可以根据类别频率(频率高的权重小,反正大)来进行采样  默认False: 不作类别区分
