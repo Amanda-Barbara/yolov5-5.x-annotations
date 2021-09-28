@@ -65,7 +65,7 @@ def check_anchors(dataset, model, thr=4.0, imgsz=640):
         r = wh[:, None] / k[None]
         # x 高宽比和宽高比的最小值 无论r大于1，还是小于等于1最后统一结果都要小于1   [6301, 9]
         x = torch.min(r, 1. / r).min(2)[0]
-        # best [6301] 为每个gt框选择匹配所有anchors宽高比例值最好的那一个比值
+        # best [6301] 为每个gt框选择匹配所有anchors宽高比例值最好的那一个比值， 沿着行取最大值
         best = x.max(1)[0]
         # aat(anchors above threshold)  每个target平均有多少个anchors
         aat = (x > 1. / thr).float().sum(1).mean()  # 当axis=1时，求的是每一行元素的和
