@@ -20,6 +20,7 @@
 ![](../docs/images/trainval/yolov3测试过程.png)
 
 ## check_anchors计算流程
+
 ![](../docs/images/anchor/check_anchors.jpg)
 
 ## 参考链接
