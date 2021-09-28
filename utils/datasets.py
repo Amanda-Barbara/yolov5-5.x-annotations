@@ -525,6 +525,7 @@ class LoadImagesAndLabels(Dataset):
         # numpy.ndarray 高维矩阵的表示：H X W X C
         # torch.Tensor 高维矩阵的表示：(nSample) X C X H X W
         # Convert BGR->RGB  HWC->CHW
+        # H X W X C 对应于 Y,X,Z坐标系,BGR to RGB 相当于空间排序,把Z(C)上的通道顺序改变了，transpose(2, 0, 1)相当于数组img竖立起来然后再向右旋转90度，
         img = img[:, :, ::-1].transpose(2, 0, 1)  # BGR to RGB, to 3 x img_height x img_width
         img = np.ascontiguousarray(img)  # img变成内存连续的数据  加快运算
 
