@@ -211,7 +211,7 @@ def kmean_anchors(path='./data/coco128.yaml', n=9, img_size=640, thr=4.0, gen=10
     wh = wh0[(wh0 >= 2.0).any(1)]  # filter > 2 pixels
     # wh = wh * (np.random.rand(wh.shape[0], 1) * 0.9 + 0.1)  # multiply by random scale 0-1
 
-    # Kmeans聚类方法: 使用欧式距离来进行聚类
+    # Kmeans聚类方法: 使用欧式距离对目标框的宽高进行聚类
     print(f'{prefix}Running kmeans for {n} anchors on {len(wh)} gt boxes...')
     # 计算宽和高的标准差->[w_std,h_std]
     s = wh.std(0)  # sigmas for whitening
