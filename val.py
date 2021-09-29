@@ -72,7 +72,7 @@ def run(data, weights=None, batch_size=32, imgsz=640, conf_thres=0.001, iou_thre
     training = model is not None
     if training:  # called by train.py
         device = next(model.parameters()).device  # get model device
-    # 如果不是trin.py调用run函数(执行val.py脚本)就调用select_device选择可用的设备
+    # 如果不是train.py调用run函数(执行val.py脚本)就调用select_device选择可用的设备
     # 并生成save_dir + make dir + 加载model + check imgsz + 加载data配置信息
     else:
         device = select_device(device, batch_size=batch_size)
