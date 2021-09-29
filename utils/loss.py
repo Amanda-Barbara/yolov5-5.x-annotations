@@ -286,7 +286,7 @@ class ComputeLoss:
                         gi: 表示这个网格的左上角x坐标
                 anch: 表示这个target所使用anchor的尺度（相对于这个feature map）  注意可能一个target会使用大小不同anchor进行计算
         具体处理流程：
-        (1) 对于任何一层计算当前bbox和当前层anchor的匹配程度，不采用iou，而是shape比例，
+        (1) 对于任何一层计算当前预测框bbox和当前层anchor的匹配程度，不采用iou，而是shape比例，
             如果anchor和bbox的宽高比差距大于4，则认为不匹配，此时忽略相应的bbox，即当作背景；
         (2) 然后对bbox计算落在的网格所有的anchors都计算loss，(并不是直接和GT框比较计算loss)
         注意此时落在网格不再是一个，而是附近的多个，这样就增加了正样本的数量
@@ -315,7 +315,14 @@ class ComputeLoss:
                             [1, 0], [0, 1], [-1, 0], [0, -1],  # j,k,l,m
                             # [1, 1], [1, -1], [-1, 1], [-1, -1],  # jk,jm,lk,lm
                             ], device=targets.device).float() * g  # offsets
-
+        # 偏移量：off 参考下图看
+        # ----------|--------|--------|
+        # |         | (0, -1)|        |
+        # ----------|--------|--------|
+        # | (-1, 0) | (0, 0) | (1, 0) |
+        # ----------|--------|--------|
+        # |         | (0, 1) |        |
+        # ----------|--------|--------|
         # 遍历三个feature 筛选每个feature map(包含batch张图片)的每个anchor的正样本
         for i in range(self.nl):  # self.nl: number of detection layers   Detect的个数 = 3
             # anchors: 当前feature map对应的三个anchor尺寸(相对feature map)  [3, 2]
