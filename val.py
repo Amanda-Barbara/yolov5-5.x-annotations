@@ -286,7 +286,7 @@ def run(data, weights=None, batch_size=32, imgsz=640, conf_thres=0.001, iou_thre
                 tcls_tensor = labels[:, 0]  # 当前图片的所有gt的类别
 
                 tbox = xywh2xyxy(labels[:, 1:5])  # gt boxes  获得xyxy格式的框
-                # 将预测框映射到原图img
+                # 将目标框映射到原图img
                 scale_coords(img[si].shape[1:], tbox, shapes[si][0], shapes[si][1])  # native-space labels
                 if plots:
                     # 计算混淆矩阵 confusion_matrix
