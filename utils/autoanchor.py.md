@@ -25,7 +25,7 @@
 ![](../docs/images/anchor/check_anchors.jpg)
 
 ## 参考链接
-* 1 [anchor概念](https://murphypei.github.io/blog/2020/10/anchor-loss)
+* 1 [anchor概念以及不同算法下的正样本匹配机制](https://murphypei.github.io/blog/2020/10/anchor-loss)
 
 
 
