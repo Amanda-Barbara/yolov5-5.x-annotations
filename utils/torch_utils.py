@@ -298,8 +298,8 @@ def sparsity(model):
     # model.parameters()返回模型model的参数 返回一个生成器 需要用for循环或者next()来获取参数
     # for循环取出每一层的前向传播和反向传播的参数
     for p in model.parameters():
-        a += p.numel()
-        b += (p == 0).sum()
+        a += p.numel() # 累计权重总数
+        b += (p == 0).sum() # 累计权重为0的总数
     # b / a 即可以反应模型的稀疏程度
     return b / a
 def prune(model, amount=0.3):
@@ -313,8 +313,8 @@ def prune(model, amount=0.3):
     print('Pruning model... ', end='')
     # 模型的迭代器 返回的是所有模块的迭代器  同时产生模块的名称(name)以及模块本身(m)
     for name, m in model.named_modules():
-        if isinstance(m, nn.Conv2d):
-            # 对当前层结构m, 随机裁剪(总参数量 x amount)数量的权重(weight)参数
+        if isinstance(m, nn.Conv2d): # 对卷积层进行剪枝
+            # 对当前层结构m, 随机裁剪(总参数量 x amount)数量的权重(weight)参数，将所有卷积层的权重减去30%，减去lowest l1-norm权重，即对网络贡献的比重最小的权重，
             prune.l1_unstructured(m, name='weight', amount=amount)  # prune
             # 彻底移除被裁剪的的权重参数
             prune.remove(m, 'weight')  # make permanent
