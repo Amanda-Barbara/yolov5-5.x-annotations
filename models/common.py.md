@@ -1,4 +1,12 @@
 # common.py代码解析
+## FLOPs概念
+* 标准CNN的FLOPs计算：
+```text
+FLOPs = [Cin * K * K + Cin * (K * K - 1) + (Cin -1) + 1] * Cout * Hout * Wout
+      = [2 * Cin * K * K] * Cout * Hout * Wout  
+```
+* `Cout*Hout*Wout`表示输出特征维度尺寸大小，其中的每一个元素是在输入数据上做了`Cin*K*K`浮点运算次数（加法+乘法）
+
 ## Focus结构
 * 对输入图像的每一通道做切片操作，变成4个原输入大小一半的4个切片，3个通道切片后加在一起即是12个切片
 * 该模块的设计主要是减少原始信息的丢失，减少计算量加快模型推理速度
