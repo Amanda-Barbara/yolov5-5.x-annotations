@@ -166,7 +166,7 @@ class SPP(nn.Module):
         super(SPP, self).__init__()
         c_ = c1 // 2  # hidden channels
         self.cv1 = Conv(c1, c_, 1, 1)  # 第一层卷积
-        self.cv2 = Conv(c_ * (len(k) + 1), c2, 1, 1)  # 最后一层卷积  +1是因为有len(k)+1个输入
+        self.cv2 = Conv(c_ * (len(k) + 1), c2, 1, 1)  # 最后一层卷积  +1是因为有len(k)+1个输入，`c_ * (len(k) + 1)` 表示每个通道上都会有空间金字塔池化操作
         self.m = nn.ModuleList([nn.MaxPool2d(kernel_size=x, stride=1, padding=x // 2) for x in k])
 
     def forward(self, x):
