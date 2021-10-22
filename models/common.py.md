@@ -48,6 +48,9 @@ c2           : 输出通道数
 ```text
 分组卷积的分组数如果和输入的通道数相同，则此时的分组卷积即为深度可分离卷积
 ```
+## 卷积操作的矩阵表示
+![](../docs/images/base_tutorial/卷积操作的矩阵表示.png)
+ 
 ## 参考链接
 * 1 [Focus结构](https://zhuanlan.zhihu.com/p/172121380)
 * 2 [Focus结构](https://mp.weixin.qq.com/s/yO13BjSNG1cEDAxqR-SkHw)
