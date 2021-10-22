@@ -51,6 +51,12 @@ c2           : 输出通道数
 ## 卷积操作的矩阵表示
 ![](../docs/images/base_tutorial/卷积操作的矩阵表示.png)
  
+
+## 自适应池化操作
+`hs,he,ws,we`表示进行池化操作的窗口大小以及起始点和重点坐标位置  
+
+![](../docs/images/base_tutorial/adaptive_pool.png)
+
 ## 参考链接
 * 1 [Focus结构](https://zhuanlan.zhihu.com/p/172121380)
 * 2 [Focus结构](https://mp.weixin.qq.com/s/yO13BjSNG1cEDAxqR-SkHw)
