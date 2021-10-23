@@ -57,6 +57,14 @@ c2           : 输出通道数
 
 ![](../docs/images/base_tutorial/adaptive_pool.png)
 
+## 空洞卷积`Dilated Conv`
+* 空洞卷积可以扩大卷积之后的感受野信息，进而获取更多的上下文信息，同时不增加参数数量  
+空洞卷积的操作相当于扩大了卷积核的大小，扩充的地方进行补零操作
+![](../docs/images/base_tutorial/空洞卷积.png)  
+* 空洞卷积输出大小的计算公式
+![](../docs/images/base_tutorial/空洞卷积输出大小的计算公式.png)  
+
+
 ## 参考链接
 * 1 [Focus结构](https://zhuanlan.zhihu.com/p/172121380)
 * 2 [Focus结构](https://mp.weixin.qq.com/s/yO13BjSNG1cEDAxqR-SkHw)
