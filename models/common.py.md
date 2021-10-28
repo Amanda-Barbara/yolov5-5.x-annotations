@@ -74,5 +74,6 @@ c2           : 输出通道数
 * 4 [分组卷积](https://blog.csdn.net/breeze_blows/article/details/98068025)
 * 5 [common.py代码解析](https://blog.csdn.net/qq_38253797/article/details/119684388)
 * 6 [same卷积](https://blog.csdn.net/u012370185/article/details/95238828)
+* 7 [百度教程之深度可分离卷积](https://paddlepedia.readthedocs.io/en/latest/tutorials/CNN/convolution_operator/Separable_Convolution.html)
 
 
