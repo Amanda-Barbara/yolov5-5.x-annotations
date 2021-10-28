@@ -21,8 +21,10 @@ Wout    : 输出数据的宽
 
 
 ## 深度可分离卷积
-* 深度可分离卷积将一般的卷积过程分为了`depthwise convolution`（逐深度卷积）和`pointwise convolution`（逐点卷积），
-  在损失一点精度的情况下，计算量大幅下降，速度更快，模型更小
+* 深度可分离卷积将一般的卷积过程分为了`depthwise convolution`（逐深度卷积）和`pointwise convolution`（逐点卷积），  
+  `depthwise convolution`逐深度卷积表示分别在每个输入通道上做卷积，输出通道数与输入通道数相同，
+  `pointwise convolution`逐点卷积表示使用`1*1`的卷积核在输入通道上进行普通卷积操作，
+* 在损失一点精度的情况下，计算量大幅下降，速度更快，模型更小
 ```text
 c1           : 输入通道数
 c2           : 输出通道数
