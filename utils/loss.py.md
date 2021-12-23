@@ -1,7 +1,8 @@
 # loss.py代码解析
 
 ## 交叉熵
-* 二分类交叉熵损失可理解为目标`是不是`，而交叉熵损失可理解为目标`是哪个`
+* 二分类交叉熵损失可理解为目标`是不是`，而交叉熵损失可理解为目标`是哪个`  
+二元交叉熵损失把负样本也考虑了进来，同时使用focal_loss来优化正负样本的比重
 
 ## loss求解
 * 框的预测值，以及目标框都要映射到特征层上，loss是在特征层上进行求解的，
@@ -26,3 +27,5 @@
 * 1 [loss求解](https://mp.weixin.qq.com/s?__biz=MzU5NTg2MzIxMw==&mid=2247486712&idx=1&sn=f56a342fbba7b155f2dfdf84776ac17e&chksm=fe6a3f3ac91db62caefd100a712717fb0663b4066bdd64e2fdc7a80c526d7cbcf8d6f4aa6a94&scene=178&cur_album_id=1826437164776095749#rd)
 * 2 [二分类交叉熵与交叉熵损失的通俗理解](https://zhuanlan.zhihu.com/p/339684056)
 * 3 [yolov5的分类损失计算流程](https://blog.csdn.net/l13022736018/article/details/118346085)
+* 4 [二元交叉熵损失](https://blog.csdn.net/qq_38253797/article/details/116225218)
+
