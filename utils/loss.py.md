@@ -7,11 +7,14 @@
 ## loss求解
 * 框的预测值，以及目标框都要映射到特征层上，loss是在特征层上进行求解的，
 
-## FocalLoss损失函数
+## `FocalLoss`损失函数
 * 使用了`nn.BCEWithLogitsLoss()=Sigmoid+BCELoss`  定义为多标签分类交叉熵损失函数  
 比如使用`coco`数据集合进行训练，共有`80`类目标，对于长度为`80`的向量，每一个索引上的值表示该目标是正样本概率的预测值`p`，  
 也即是负样本概率的预测值`1-p`，训练时对于每个类别的样本需要区分是正样本还是负样本，此长度为`80`的向量的和可能不是`1`，  
 可能大于`1`，也可能小于`1`，
+* 参数`α`调整的是负样本`loss`的权重，参数`γ`调整的是难易样本的`loss`占比  
+![](images/focal_loss.png)
+
 
 ## yolov5边框回归机制
 * yolov5采用了跨邻域网格的正样本匹配策略，这样可以得到更多的正样本anchor，加速收敛
@@ -34,4 +37,6 @@
 * 2 [二分类交叉熵与交叉熵损失的通俗理解](https://zhuanlan.zhihu.com/p/339684056)
 * 3 [yolov5的分类损失计算流程](https://blog.csdn.net/l13022736018/article/details/118346085)
 * 4 [二元交叉熵损失](https://blog.csdn.net/qq_38253797/article/details/116225218)
+* 5 [FocalLoss理解](https://blog.csdn.net/u014311125/article/details/109470137)
+* 6 [熵的概念与公式解析](https://www.cnblogs.com/wangguchangqing/p/12068084.html#autoid-0-2-0)
 
