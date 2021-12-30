@@ -76,14 +76,19 @@ c2           : 输出通道数
 ![](../docs/images/base_tutorial/空洞卷积输出大小的计算公式.png)
 
 
-## Squeeze-and-Excitation Networks
+## `Squeeze-and-Excitation Networks`
 * 用来增强通道间的依赖性，是一种特征增强策略，
 
 ![](../docs/images/base_tutorial/senet_block.png)
+全局平均池化操作将 `C x H x W` 特征图减少到 `C x 1 x 1`，以获得每个通道的全局统计数据
 
 ![](../docs/images/base_tutorial/global_average_pooling.png)
 
-全局平均池化操作将 C x H x W 特征图减少到 C x 1 x 1，以获得每个通道的全局统计数据
+对上述全局平均池化后的输出再执行两个全连接层操作，分别是`ReLU`,`Sigmoid`操作， 然后得到`C x 1 x 1`的向量，
+该向量的每一个值与`C x H x W` 特征图上对应位置通道上的矩阵`H X W`进行相乘，
+
+![](../docs/images/base_tutorial/ExcitationAdaptiveRecalibration.png)
+
 
 ## 参考链接
 * 1 [Focus结构](https://zhuanlan.zhihu.com/p/172121380)
