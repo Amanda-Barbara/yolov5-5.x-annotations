@@ -1,4 +1,13 @@
 # common.py代码解析
+
+## 在RGB三通道的彩色图上进行3x3卷积核大小的卷积操作
+
+![](../docs/images/base_tutorial/rgb_cnn.gif)
+
+然后新特征图的每一个元素值是由在三个通道(RGB)上分别做的卷积进行累加求和再加上偏置项而得到
+
+![](../docs/images/base_tutorial/conv_output.gif)
+
 ## FLOPs概念
 * 标准CNN的FLOPs计算：
 ```text
@@ -66,6 +75,16 @@ c2           : 输出通道数
 * 空洞卷积输出大小的计算公式
 ![](../docs/images/base_tutorial/空洞卷积输出大小的计算公式.png)
 
+
+## Squeeze-and-Excitation Networks
+* 用来增强通道间的依赖性，是一种特征增强策略，
+
+![](../docs/images/base_tutorial/senet_block.png)
+
+![](../docs/images/base_tutorial/global_average_pooling.png)
+
+全局平均池化操作将 C x H x W 特征图减少到 C x 1 x 1，以获得每个通道的全局统计数据
+
 ## 参考链接
 * 1 [Focus结构](https://zhuanlan.zhihu.com/p/172121380)
 * 2 [Focus结构](https://mp.weixin.qq.com/s/yO13BjSNG1cEDAxqR-SkHw)
@@ -74,5 +93,6 @@ c2           : 输出通道数
 * 5 [common.py代码解析](https://blog.csdn.net/qq_38253797/article/details/119684388)
 * 6 [same卷积](https://blog.csdn.net/u012370185/article/details/95238828)
 * 7 [百度教程之深度可分离卷积](https://paddlepedia.readthedocs.io/en/latest/tutorials/CNN/convolution_operator/Separable_Convolution.html)
+* 8 [SENet](https://amaarora.github.io/2020/07/24/SeNet.html)
 
 
