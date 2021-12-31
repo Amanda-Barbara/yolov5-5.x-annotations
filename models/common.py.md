@@ -77,7 +77,7 @@ c2           : 输出通道数
 
 
 ## `Squeeze-and-Excitation Networks`
-* 用来增强通道间的依赖性，是一种特征增强策略，
+* 通过对每一个通道进行加权来突出通道贡献的比例，进而用来增强通道间的依赖性，是一种特征增强策略，
 
 ![](../docs/images/base_tutorial/senet_block.png)
 全局平均池化操作将 `C x H x W` 特征图减少到 `C x 1 x 1`，以获得每个通道的全局统计数据
