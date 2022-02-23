@@ -209,9 +209,9 @@ class ComputeLoss:
                 # Regression loss  只计算所有正样本的回归损失
                 # 新的公式:  pxy = [-0.5 + cx, 1.5 + cx]    pwh = [0, 4pw]   这个区域内都是正样本
                 # Get more positive samples, accelerate convergence and be more stable
-                pxy = ps[:, :2].sigmoid() * 2. - 0.5  # 一个归一化操作 和论文里不同
+                pxy = ps[:, :2].sigmoid() * 2. - 0.5  # 这样可以跨网格匹配更多的正样本
                 # https://github.com/ultralytics/yolov3/issues/168
-                pwh = (ps[:, 2:4].sigmoid() * 2) ** 2 * anchors[i]  # 和论文里不同 这里是作者自己提出的公式
+                pwh = (ps[:, 2:4].sigmoid() * 2) ** 2 * anchors[i]  # 保证了预测框的宽高与锚框的宽高比最大不超过4
                 pbox = torch.cat((pxy, pwh), 1)  # predicted box
                 # 这里的tbox[i]中的xy是这个target对当前grid_cell左上角的偏移量[0,1]  而pbox.T是一个归一化的值
                 # 就是要用这种方式训练 传回loss 修改梯度 让pbox越来越接近tbox(偏移量)
