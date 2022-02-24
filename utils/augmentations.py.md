@@ -18,4 +18,7 @@
 
 ## 参考链接
 * 1 [输入图像自适应缩放](https://zhuanlan.zhihu.com/p/172121380)
-* 1 [输入图像自适应缩放](https://www.jiangdabai.com/2117)
+* 2 [输入图像自适应缩放](https://www.jiangdabai.com/2117)
+* 3 [soft nms策略](https://blog.csdn.net/Roaddd/article/details/114027535)
+
+
