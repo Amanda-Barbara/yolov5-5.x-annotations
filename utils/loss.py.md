@@ -18,6 +18,7 @@
   
 ![](../docs/images/loss/QFocalLoss.png)
 
+![](../docs/images/loss/focal_loss2.png)
 
 ## yolov5边框回归机制
 * yolov5采用了跨邻域网格的正样本匹配策略，这样可以得到更多的正样本anchor，加速收敛
