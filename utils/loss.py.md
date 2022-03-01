@@ -44,4 +44,5 @@
 * 5 [FocalLoss理解](https://blog.csdn.net/u014311125/article/details/109470137)
 * 6 [熵的概念与公式解析](https://www.cnblogs.com/wangguchangqing/p/12068084.html#autoid-0-2-0)
 * 7 [Quality Focal Loss与Focal Loss详解](https://zhuanlan.zhihu.com/p/147691786)
+* 8 [FocalLoss、DiceLoss](https://zhuanlan.zhihu.com/p/57008984)
 
