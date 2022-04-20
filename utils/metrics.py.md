@@ -15,3 +15,4 @@
 
 ## 参考链接
 * 1 [输入图像自适应缩放](https://www.jiangdabai.com/2120)
+* 2 [数据标准化的几何意义](https://blog.csdn.net/weixin_45209433/article/details/120653616)
